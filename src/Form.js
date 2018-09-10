@@ -7,6 +7,7 @@ export default class Form extends Component{
 		this.state ={
 			name: "",
 			email: "",
+			error: false,
 		};
 	}
 	handleChange = (event) =>{
@@ -17,9 +18,22 @@ export default class Form extends Component{
 	}
 	formSubmit = () =>{
 		const {name, email} = this.state;
-		if(name.length && email.length) {
+		const { characters } = this.props;
+		const arr = characters.map((val,index) => {
+			return val.email;
+		});
+		if(name.length && email.length && !arr.includes(this.state.email)) {
 			this.props.handleSubmit(this.state)
+			this.setState ({
+				error: false,	
+			})
+
+		} else {
+			this.setState ({
+				error: true,	
+			})
 		}
+
 		this.setState({
 			name: "",
 			email: "",
@@ -30,6 +44,12 @@ export default class Form extends Component{
 		const {name, email} = this.state;
 		return(
 				<div>
+					{this.state.error &&
+						<p>Email is already there</p>
+					}
+					{!this.state.email.length && 
+						<p>Email is Empty</p>
+					}
 					<input type="text" name="name" value={name} onChange={this.handleChange}/>
 					<input type="text" name="email" value={email} onChange={this.handleChange}/>
 					<input type="button" name="submit" onClick={this.formSubmit} value="Submit"/>

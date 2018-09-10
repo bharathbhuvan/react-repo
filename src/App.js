@@ -25,7 +25,7 @@ export default class App extends Component {
 		return(
 			<div className="container">
         		<Table charactername = {this.state.characters} rmovechar ={this.removeCharacter}/>
-        		<Form handleSubmit={this.handleSubmit}/>
+        		<Form handleSubmit={this.handleSubmit} characters = {this.state.characters}/>
     		</div>
 		);
 	}
